@@ -8,7 +8,7 @@ const secret = import.meta.env.VITE_SECRET;
 const getCategories = async () => {
   var config = {
     method: "get",
-    url: API_URL + "get/categories",
+    url: "http://localhost:7474/main/" + "get/categories",
     headers: {
       Authorization: "Bearer " + secret,
       "Content-Type": "application/json",

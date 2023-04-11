@@ -37,9 +37,9 @@ function CharacterBoxes({ data, isCMS }) {
             <div className="info">
               <h4>{item.Name}</h4>
             </div>
-            {item.Images.length > 0 ? (
+            {item.ImageURL ? (
               <div className="preview">
-                <img src={item.Images[0].ImageURL} />
+                <img src={item.ImageURL} />
               </div>
             ) : (
               <div className="info">

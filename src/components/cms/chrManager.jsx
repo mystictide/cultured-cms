@@ -13,13 +13,14 @@ function ChrManager({ data, modalControl }) {
     name: data ? data.Name : "",
     body: data ? data.Body : "",
     alt: data ? (data.Alt ? data.Alt : "") : "",
+    imageurl: data ? (data.ImageURL ? data.ImageURL : "") : "",
   });
 
   const { cats } = useSelector((state) => state.cms);
   const [cat, setCats] = useState(data ? data.Category : "");
   const [selection, SetSelection] = useState(false);
   const catOptions = useMemo(() => cats.filter((i) => i.ParentID !== null), []);
-  const { name, body, alt } = formData;
+  const { name, body, alt, imageurl } = formData;
 
   const onCatChange = (value) => {
     setCats(value);
@@ -32,6 +33,8 @@ function ChrManager({ data, modalControl }) {
       name,
       body,
       category: cat,
+      alt,
+      imageurl,
     };
     if (name != "" && body != "") {
       dispatch(manageCharacter(reqData));
@@ -50,10 +53,6 @@ function ChrManager({ data, modalControl }) {
       SetSelection(null);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(body);
-  // }, [body, formData, setFormData]);
 
   return (
     <div className="modal-container">
@@ -103,6 +102,21 @@ function ChrManager({ data, modalControl }) {
               name="alt"
               value={alt}
               placeholder="enter alt information"
+              className="main-border"
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  [e.target.name]: e.target.value,
+                }))
+              }
+            />
+            <label>Image Address</label>
+            <input
+              type="text"
+              id="imageurl"
+              name="imageurl"
+              value={imageurl}
+              placeholder="enter image url"
               className="main-border"
               onChange={(e) =>
                 setFormData((prevState) => ({

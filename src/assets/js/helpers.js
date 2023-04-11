@@ -49,18 +49,42 @@ export function buildFilterURL(reqData) {
   return url;
 }
 
+export function formatPrettyURL(string) {
+  //slugify
+  const a =
+    "àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìıİłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;";
+  const b =
+    "aaaaaaaaaacccddeeeeeeeegghiiiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------";
+  const p = new RegExp(a.split("").join("|"), "g");
+
+  return string
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(p, (c) => b.charAt(a.indexOf(c))) // Replace special characters
+    .replace(/&/g, "-and-") // Replace & with 'and'
+    .replace(/[^\w-]+/g, "") // Remove all non-word characters
+    .replace(/--+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/, "") // Trim - from start of text
+    .replace(/-+$/, ""); // Trim - from end of text
+}
+
 export function buildHTMLText(method, selection, body) {
   //0 = category, 1 = character
   let result = "";
   if (!method) {
     result = body.replaceAll(
       selection,
-      `<Link to="/c/${selection}" className="category">${selection}</Link>`
+      `<Link to="/c/${formatPrettyURL(
+        selection
+      )}" className="category">${selection}</Link>`
     );
   } else {
     result = body.replaceAll(
       selection,
-      `<Link to="/${selection}" className="character">${selection}</Link>`
+      `<Link to="/${formatPrettyURL(
+        selection
+      )}" className="character">${selection}</Link>`
     );
   }
   return result;

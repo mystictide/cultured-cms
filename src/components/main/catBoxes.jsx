@@ -33,6 +33,13 @@ function CatBoxes({ data }) {
             <div className="info">
               <h4>{item.Name}</h4>
             </div>
+            {item.ImageURL ? (
+              <div className="preview">
+                <img src={item.ImageURL} />
+              </div>
+            ) : (
+              ""
+            )}
             <div className="functions c-gap-5">
               <button
                 className="btn-function"

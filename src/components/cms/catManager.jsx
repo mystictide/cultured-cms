@@ -10,12 +10,13 @@ function CatManager({ data, modalControl }) {
   const [formData, setFormData] = useState({
     id: data ? data.ID : "",
     name: data ? data.Name : "",
+    imageurl: data ? (data.ImageURL ? data.ImageURL : "") : "",
   });
 
   const { cats } = useSelector((state) => state.cms);
   const [cat, setCats] = useState(data ? data.ParentID : "");
   const catOptions = useMemo(() => cats, []);
-  const { name } = formData;
+  const { name, imageurl} = formData;
 
   const onCatChange = (value) => {
     setCats(value);
@@ -26,6 +27,7 @@ function CatManager({ data, modalControl }) {
     const reqData = {
       id: data ? data.ID : null,
       name,
+      imageurl,
       parentid: cat ? cat.ID : null,
     };
     if (name != "") {
@@ -77,6 +79,21 @@ function CatManager({ data, modalControl }) {
               getOptionValue={(options) => options["ID"]}
               value={cat ? catOptions.find((o) => o.ID === cat) : ""}
               onChange={onCatChange}
+            />
+            <label>Image Address</label>
+            <input
+              type="text"
+              id="imageurl"
+              name="imageurl"
+              value={imageurl}
+              placeholder="enter image url"
+              className="main-border"
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  [e.target.name]: e.target.value,
+                }))
+              }
             />
             <div className="functions">
               <button type="submit" className="btn-function">
