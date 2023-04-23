@@ -1,14 +1,21 @@
 import axios from "axios";
 import { storeWithDate } from "../../assets/js/helpers";
 
-const API_URL = "http://localhost:7474/cms/";
-// const API_URL = "https://capi.herrguller.cc/cms/";
+// const API_URL = "http://localhost:7474/cms/";
+const API_URL = "https://capi.herrguller.cc/cms/";
 const secret = import.meta.env.VITE_SECRET;
 
 const getCategories = async () => {
   var config = {
     method: "get",
-    url: "http://localhost:7474/main/" + "get/categories",
+    url:
+      "https://capi.herrguller.cc/main" +
+      "/get/categories?main=" +
+      false +
+      "&prev=" +
+      false +
+      "&parentid=" +
+      0,
     headers: {
       Authorization: "Bearer " + secret,
       "Content-Type": "application/json",
@@ -21,6 +28,7 @@ const getCategories = async () => {
       return response.data;
     })
     .catch(function (error) {
+      console.log(error);
       return { data: error.response.data, status: error.response.status };
     });
 

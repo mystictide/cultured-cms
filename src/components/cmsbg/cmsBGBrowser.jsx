@@ -15,7 +15,7 @@ function CMSBGBrowser({ filteredData }) {
   const { bg } = useSelector((state) => state.cms);
 
   useEffect(() => {
-    if (bg) {
+    if (!bg) {
       const reqData = {
         handle: true,
         filter: { Keyword: keyword, page: 1 },
@@ -24,7 +24,7 @@ function CMSBGBrowser({ filteredData }) {
     }
   }, [bg]);
 
-  const setFilter = (e, page, filter) => {
+  const setFilter = (page, filter) => {
     setFilterModel(filter);
     const reqData = {
       handle: true,

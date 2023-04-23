@@ -75,16 +75,16 @@ export function buildHTMLText(method, selection, body) {
   if (!method) {
     result = body.replaceAll(
       selection,
-      `<Link to="/c/${formatPrettyURL(
+      `<a href="/category/${formatPrettyURL(
         selection
-      )}" className="category">${selection}</Link>`
+      )}" class="category">${selection}</a>`
     );
   } else {
     result = body.replaceAll(
       selection,
-      `<Link to="/${formatPrettyURL(
+      `<a href="/c/${formatPrettyURL(
         selection
-      )}" className="character">${selection}</Link>`
+      )}" class="character">${selection}</a>`
     );
   }
   return result;

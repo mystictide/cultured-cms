@@ -11,12 +11,13 @@ function CatManager({ data, modalControl }) {
     id: data ? data.ID : "",
     name: data ? data.Name : "",
     imageurl: data ? (data.ImageURL ? data.ImageURL : "") : "",
+    description: data ? (data.Description ? data.Description : "") : "",
   });
 
   const { cats } = useSelector((state) => state.cms);
   const [cat, setCats] = useState(data ? data.ParentID : "");
   const catOptions = useMemo(() => cats, []);
-  const { name, imageurl} = formData;
+  const { name, imageurl, description } = formData;
 
   const onCatChange = (value) => {
     setCats(value);
@@ -28,7 +29,8 @@ function CatManager({ data, modalControl }) {
       id: data ? data.ID : null,
       name,
       imageurl,
-      parentid: cat ? cat.ID : null,
+      description,
+      parentid: cat ? (cat.ID ? cat.ID : cat) : null,
     };
     if (name != "") {
       dispatch(manageCategory(reqData));
@@ -88,6 +90,21 @@ function CatManager({ data, modalControl }) {
               value={imageurl}
               placeholder="enter image url"
               className="main-border"
+              onChange={(e) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  [e.target.name]: e.target.value,
+                }))
+              }
+            />
+            <label>Description</label>
+            <textarea
+              type="text"
+              id="description"
+              name="description"
+              value={description}
+              placeholder="enter description"
+              className="main-border desc"
               onChange={(e) =>
                 setFormData((prevState) => ({
                   ...prevState,

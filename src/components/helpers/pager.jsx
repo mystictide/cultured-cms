@@ -9,7 +9,7 @@ function Pager({ data, setFilter, filterModel }) {
                 <li className="pager-item">
                   <button
                     className="btn-function pager-button"
-                    onClick={(e) => setFilter(e, 1, filterModel)}
+                    onClick={(e) => setFilter(1, filterModel)}
                   >
                     {"<<"}
                   </button>
@@ -22,11 +22,7 @@ function Pager({ data, setFilter, filterModel }) {
                   <button
                     className="btn-function pager-button"
                     onClick={(e) =>
-                      setFilter(
-                        e,
-                        data.filter.pager.CurrentPage - 1,
-                        filterModel
-                      )
+                      setFilter(data.filter.pager.CurrentPage - 1, filterModel)
                     }
                   >
                     Previous Page
@@ -43,11 +39,7 @@ function Pager({ data, setFilter, filterModel }) {
                   <button
                     className="btn-function pager-button"
                     onClick={(e) =>
-                      setFilter(
-                        e,
-                        data.filter.pager.CurrentPage + 1,
-                        filterModel
-                      )
+                      setFilter(data.filter.pager.CurrentPage + 1, filterModel)
                     }
                   >
                     Next Page
@@ -62,7 +54,7 @@ function Pager({ data, setFilter, filterModel }) {
                   <button
                     className="btn-function pager-button"
                     onClick={(e) =>
-                      setFilter(e, data.filter.pager.TotalPages, filterModel)
+                      setFilter(data.filter.pager.TotalPages, filterModel)
                     }
                   >
                     {">>"}

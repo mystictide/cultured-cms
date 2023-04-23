@@ -2,12 +2,16 @@ import { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 
-function Search({ setFilter, setKeyword, keyword }) {
+function Search({ setFilter, setKeyword, setSorting, keyword }) {
   const { filteredData, cats } = useSelector((state) => state.cms);
   const categoryOptions = useMemo(() => cats, []);
+  const sortOptions = [
+    { value: "desc", label: "Latest" },
+    { value: "asc", label: "Oldest" },
+  ];
 
   const [category, setCategories] = useState(
-    filteredData.filterModel.Category ? filteredData.filterModel.Category : ""
+    filteredData.filter.CategoryID ? filteredData.filter.CategoryID : ""
   );
 
   const [filterModel, setFilterModel] = useState({
@@ -18,18 +22,28 @@ function Search({ setFilter, setKeyword, keyword }) {
     setCategories(value);
     setFilterModel((prevState) => ({
       ...prevState,
-      category: value,
+      CategoryID: value.ID,
     }));
+  };
+
+  const onSortingChange = (value) => {
+    setSorting(value.value);
+    setFilterModel((prevState) => ({
+      ...prevState,
+      SortBy: value,
+    }));
+    setFilter(1, filterModel);
   };
 
   const resetFilter = () => {
     setCategories("");
     setKeyword("");
+    setSorting("desc");
   };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      setFilter(e, 1, filterModel);
+      setFilter(1, filterModel);
     }
   };
 
@@ -44,8 +58,21 @@ function Search({ setFilter, setKeyword, keyword }) {
         options={categoryOptions}
         getOptionLabel={(options) => options["Name"]}
         getOptionValue={(options) => options["ID"]}
-        value={category}
+        value={categoryOptions.find(
+          (x) => x.ID === filteredData.filter.CategoryID
+        )}
         onChange={onCategoryChange}
+      />
+      <Select
+        className="select"
+        id="sorting"
+        name="sorting"
+        placeholder={"sort by"}
+        options={sortOptions}
+        getOptionLabel={(options) => options["label"]}
+        getOptionValue={(options) => options["value"]}
+        value={sortOptions.find((x) => x.value === filteredData.filter.SortBy)}
+        onChange={onSortingChange}
       />
       <input
         type="text"
@@ -59,7 +86,7 @@ function Search({ setFilter, setKeyword, keyword }) {
       />
       <button
         className="btn-function"
-        onClick={(e) => setFilter(e, 1, filterModel)}
+        onClick={(e) => setFilter(1, filterModel)}
       >
         Search
       </button>

@@ -16,26 +16,28 @@ function CMSBrowser({ filteredData }) {
   const [filter, setFilterModel] = useState(null);
   const [catModal, setCatModal] = useState(false);
   const [chrModal, setChrModal] = useState(false);
+  const [sorting, setSorting] = useState("desc");
   const { character } = useSelector((state) => state.cms);
 
   useEffect(() => {
     if (character) {
       const reqData = {
         handle: true,
-        filter: { Keyword: keyword, page: 1, CategoryID: 0 },
+        filter: { Keyword: keyword, page: 1, CategoryID: 0, SortBy: sorting },
       };
       dispatch(filterCharacters(reqData));
     }
   }, [character]);
 
-  const setFilter = (e, page, filter) => {
+  const setFilter = (page, filter) => {;
     setFilterModel(filter);
     const reqData = {
       handle: true,
       filter: {
         Keyword: keyword,
         page: page,
-        CategoryID: filter ? filter.category.ID : 0,
+        CategoryID: filter ? filter.CategoryID : 0,
+        SortBy: sorting,
       },
     };
     dispatch(filterCharacters(reqData));
@@ -50,6 +52,7 @@ function CMSBrowser({ filteredData }) {
               setFilter={setFilter}
               setCategory={setCategory}
               setKeyword={setKeyword}
+              setSorting={setSorting}
               keyword={keyword}
               category={category}
             />

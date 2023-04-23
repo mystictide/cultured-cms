@@ -36,7 +36,7 @@ function ChrManager({ data, modalControl }) {
       alt,
       imageurl,
     };
-    if (name != "" && body != "") {
+    if (name != "" && body != "" && cat != "") {
       dispatch(manageCharacter(reqData));
       modalControl(false);
     } else {
