@@ -148,6 +148,50 @@ const manageCategory = async (reqData) => {
   return data;
 };
 
+const deleteCharacter = async (reqData) => {
+  var config = {
+    method: "post",
+    url: API_URL + "delete/character",
+    headers: {
+      Authorization: "Bearer " + secret,
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(reqData),
+  };
+
+  var data = await axios(config)
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      return { data: error.response.data, status: error.response.status };
+    });
+
+  return data;
+};
+
+const deleteCategory = async (reqData) => {
+  var config = {
+    method: "post",
+    url: API_URL + "delete/category",
+    headers: {
+      Authorization: "Bearer " + secret,
+      "Content-Type": "application/json",
+    },
+    data: JSON.stringify(reqData),
+  };
+
+  var data = await axios(config)
+    .then(function (response) {
+      return response.data;
+    })
+    .catch(function (error) {
+      return { data: error.response.data, status: error.response.status };
+    });
+
+  return data;
+};
+
 const cmsService = {
   getCategories,
   filterCharacters,
@@ -155,6 +199,8 @@ const cmsService = {
   manageCharacter,
   manageCategory,
   manageBackground,
+  deleteCharacter,
+  deleteCategory,
 };
 
 export default cmsService;

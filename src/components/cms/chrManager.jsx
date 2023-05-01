@@ -40,7 +40,6 @@ function ChrManager({ data, modalControl }) {
       dispatch(manageCharacter(reqData));
       modalControl(false);
     } else {
-      modalControl(false);
       toast.error("Please fill all the necessary properties.");
     }
   };
